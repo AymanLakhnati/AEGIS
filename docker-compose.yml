@@ -1,0 +1,25 @@
+services:
+  backend:
+    build: ./apps/backend
+    ports:
+      - "8000:8000"
+    environment:
+      AEGIS_CORS_ORIGINS: http://localhost:3000,http://127.0.0.1:3000
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  frontend:
+    build:
+      context: ./apps/frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    depends_on:
+      backend:
+        condition: service_healthy
