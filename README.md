@@ -49,6 +49,17 @@ python -m pytest -q
 
 Docker Compose is defined in `docker-compose.yml`, but Docker is not installed in the current Windows environment, so it has not been executed here.
 
+## Deployment
+
+The recommended deployment is Vercel for `apps/frontend` and Render for `apps/backend`.
+
+1. In Render, create a Blueprint from `render.yaml`, then set `AEGIS_CORS_ORIGINS` to the final Vercel URL.
+2. In Vercel, import this GitHub repository and set the project root directory to `apps/frontend`.
+3. Add `NEXT_PUBLIC_API_URL` in Vercel using the Render service URL, for example `https://aegis-api.onrender.com`.
+4. Redeploy Vercel after the Render URL is available.
+
+No credentials belong in this repository. Use GitHub OAuth in Vercel and Render, and enter environment values in their dashboards.
+
 ## Architecture Direction
 
 ```text

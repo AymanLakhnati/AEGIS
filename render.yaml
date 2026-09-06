@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: aegis-api
+    runtime: docker
+    rootDir: apps/backend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: AEGIS_CORS_ORIGINS
+        sync: false
